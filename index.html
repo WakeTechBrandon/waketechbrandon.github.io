@@ -1,7 +1,111 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <link rel="stylesheet" href="./tech-portfolio/website/static/css/default.css">
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+    <header>
+    <div class="side_by_side">
+        <h1>Brandon M. Biggs</h1>
+        <nav>
+
+            <div id="about">
+            </div> <!-- About -->
+            <div id="projects">
+            </div> <!-- Projects -->
+
+        </nav>
+    </div>
+    </header>
+
+    <main>
+
+        <div id="project_track" class="side_by_side" data-mouse-down-at="0" data-cur-percentage="0">
+            <div id="treasured_cove_github" class="document noselect" draggable="false">
+                <header><h2><a class="link_block" href="https://github.com/TreasuredQuartz/TreasuredCove">
+                    Treasured Cove
+                </a></h2></header>
+                <div class="document_body"></div>
+                <footer><h3>Unreal Engine Project</h3></footer>
+            </div> <!-- Document -->
+
+            <div id="bloodnbones_github" class="document noselect" draggable="false">
+                <header><h2><a class="link_block" href="https://github.com/TreasuredQuartz/bloodnbones_bedrock">Blood N' Bones</a></h2></header>
+                <div class="document_body"></div>
+
+                <footer><h3>Minecraft Addon Project</h3></footer>
+            </div> <!-- Document -->
+
+            <div id="bombastic_bookstore_github" class="document noselect" draggable="false">
+                <header><h2><a class="link_block" href="https://github.com/WakeTechBrandon/Bombastic-Bookstore">Bombastic Bookstore</a></h2></header>
+                <div class="document_body"></div>
+                <footer><h3>Software Application Project</h3></footer>
+            </div> <!-- Document -->
+        </div>
+
+        <script type="text/javascript">
+            const track = document.getElementById("project_track");
+
+            window.onmousedown = e => {
+                track.dataset.mouseDownAt = e.clientX;
+            }
+
+            window.onmouseup = () => {
+                track.dataset.mouseDownAt = "0";
+                track.dataset.curPercentage = track.dataset.percentage;
+            }
+
+            window.onmousemove = e => {
+                if (track.dataset.mouseDownAt === "0") return;
+
+                const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX, 
+                    maxDelta = window.innerWidth / 2;
+                
+                const percentage = (mouseDelta / maxDelta) * -100,
+                    nextPercentage = parseFloat(track.dataset.curPercentage) + percentage;
+
+                const nextPercentageClamped = Math.max(Math.min(nextPercentage, 0), -100);
+
+                track.dataset.percentage = nextPercentageClamped;
+
+                track.animate({
+                    transform: `translate(${nextPercentageClamped}%, -50%)`
+                }, { duration: 1200, fill: "forwards" });
+
+                for(const elem of track.getElementsByClassName("document")) {
+                    elem.animate({
+                        objectPosition: `${nextPercentageClamped + 100} 50%`
+                    }, { duration: 1200, fill: "forwards" });
+                }
+            }
+        </script>
+    </main>
+
+    <footer>
+    <div class="side_by_side">
+
+        <div>
+            <!-- Left Buffer -->
+        </div>
+
+        <div class="side_by_side" style="flex: 0;">
+            <div id="linkedin" class="social_media">
+
+            </div> <!-- LinkedIn -->
+
+            <div id="youtube" class="social_media">
+
+            </div> <!-- YouTube -->
+        </div>
+
+        <h2>Tech-Portfolio</h2>
+
+    </div>
+    </footer>
+
 </body>
+
 </html>
